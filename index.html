@@ -345,9 +345,7 @@ body{
         <div class="detail-example" id="d-eg">例：あおい（aoi）藍色</div>
       </div>
     </div>
-    <div id="voice-info" style="font-size:11px;color:var(--text3);text-align:right;margin-bottom:4px;min-height:14px"></div>
-    <div id="voice-list" style="font-size:10px;color:var(--text3);margin-bottom:4px;line-height:1.6;display:none"></div>
-    <button onclick="showAllVoices()" style="font-size:11px;color:var(--text3);background:none;border:none;padding:0;margin-bottom:6px;cursor:pointer;text-decoration:underline">顯示所有日語聲音</button>
+    
     <button class="speak-btn" onclick="speak(currentChar)">
       <span class="speak-icon">♪</span>
       朗讀發音
@@ -522,51 +520,39 @@ function selectKana(item){
   speak(item.c);
 }
 
-let _jaVoice = null;
+const AUDIO_MAP = {
+  'あ':'a','い':'i','う':'u','え':'e','お':'o',
+  'か':'ka','き':'ki','く':'ku','け':'ke','こ':'ko',
+  'さ':'sa','し':'shi','す':'su','せ':'se','そ':'so',
+  'た':'ta','ち':'chi','つ':'tsu','て':'te','と':'to',
+  'な':'na','に':'ni','ぬ':'nu','ね':'ne','の':'no',
+  'は':'ha','ひ':'hi','ふ':'fu','へ':'he','ほ':'ho',
+  'ま':'ma','み':'mi','む':'mu','め':'me','も':'mo',
+  'や':'ya','ゆ':'yu','よ':'yo',
+  'ら':'ra','り':'ri','る':'ru','れ':'re','ろ':'ro',
+  'わ':'wa','を':'wo','ん':'n'
+};
 
-function loadVoice(){
-  const voices = speechSynthesis.getVoices();
-  const preferred = ['Otoya','Hattori','Kyoko','O-Ren','O_Ren'];
-  for(const name of preferred){
-    const v = voices.find(v=>v.name.toLowerCase().includes(name.toLowerCase()));
-    if(v){_jaVoice=v; showVoiceName(v.name); return;}
-  }
-  const jaVoices = voices.filter(v=>v.lang==='ja-JP'||v.lang==='ja_JP'||v.lang.startsWith('ja'));
-  const male = jaVoices.find(v=>v.name.match(/male|man|otoya|hattori/i));
-  _jaVoice = male || jaVoices[0] || null;
-  if(_jaVoice) showVoiceName(_jaVoice.name);
-}
-
-function showAllVoices(){
-  const voices = speechSynthesis.getVoices();
-  const jaVoices = voices.filter(v=>v.lang.startsWith('ja'));
-  const el = document.getElementById('voice-list');
-  el.style.display = 'block';
-  el.textContent = jaVoices.map(v=>v.name+' ('+v.lang+')').join(' | ') || '找不到日語聲音';
-}
-
-function showVoiceName(name){
-  const el = document.getElementById('voice-info');
-  if(el) el.textContent = '聲音：' + name;
-}
-
-speechSynthesis.onvoiceschanged = loadVoice;
-setTimeout(loadVoice, 200);
+let _currentAudio = null;
 
 function speak(char){
   if(!char||!char.trim()) return;
-  if(!window.speechSynthesis) return;
-  speechSynthesis.cancel();
-  setTimeout(()=>{
-    if(!_jaVoice) loadVoice();
-    const u = new SpeechSynthesisUtterance(char);
-    u.lang = 'ja-JP';
-    u.rate = 0.6;
-    u.pitch = 1.0;
-    if(_jaVoice) u.voice = _jaVoice;
-    speechSynthesis.speak(u);
-  }, 100);
+  const file = AUDIO_MAP[char];
+  if(!file) return;
+  if(_currentAudio){
+    _currentAudio.pause();
+    _currentAudio.currentTime = 0;
+    _currentAudio = null;
+  }
+  const audio = new Audio('audio/' + file + '.mp3');
+  _currentAudio = audio;
+  audio.play().catch(err=>{
+    console.log('Audio error:', err);
+  });
 }
+
+function showAllVoices(){}
+function showVoiceName(){}
 
 function setTab(tab){
   document.querySelectorAll('.tab-content').forEach(el=>{
