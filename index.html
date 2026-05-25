@@ -9,323 +9,109 @@
 <meta name="application-name" content="日文Go">
 <meta name="theme-color" content="#2D6A4F">
 <title>日文Go</title>
-<link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22%E6%97%A5%E6%96%87Go%22%2C%22short_name%22%3A%22%E6%97%A5%E6%96%87Go%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%232D6A4F%22%2C%22theme_color%22%3A%22%232D6A4F%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHNvZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI%2BPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSI5NiIgZmlsbD0iIzJENkE0RiIvPjx0ZXh0IHg9IjI1NiIgeT0iMzI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtc2l6ZT0iMjgwIiBmaWxsPSIjRjBGN0Y0Ij7jgYI8L3RleHQ%2BPC9zdmc%2B%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+<link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22%E6%97%A5%E6%96%87Go%22%2C%22short_name%22%3A%22%E6%97%A5%E6%96%87Go%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%232D6A4F%22%2C%22theme_color%22%3A%22%232D6A4F%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22icon.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#FAFAF8;
-  --surface:#FFFFFF;
-  --surface2:#F3F2EE;
-  --border:#E8E6E0;
-  --text:#1A1A18;
-  --text2:#6B6A64;
-  --text3:#9B9A94;
-  --accent:#2D6A4F;
-  --accent-light:#E8F5EE;
-  --accent-text:#1B4332;
-  --danger:#C0392B;
-  --danger-light:#FDECEA;
-  --info:#1A5276;
-  --info-light:#EBF5FB;
-  --radius:12px;
-  --radius-sm:8px;
+  --bg:#FAFAF8;--surface:#FFFFFF;--surface2:#F3F2EE;--border:#E8E6E0;
+  --text:#1A1A18;--text2:#6B6A64;--text3:#9B9A94;
+  --accent:#2D6A4F;--accent-light:#E8F5EE;--accent-text:#1B4332;
+  --kata:#1A5276;--kata-light:#EBF5FB;--kata-text:#0D2E45;
+  --danger:#C0392B;--danger-light:#FDECEA;
+  --radius:12px;--radius-sm:8px;
 }
-body{
-  font-family:'Noto Sans TC',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  max-width:480px;
-  margin:0 auto;
-}
-.app-header{
-  background:var(--surface);
-  border-bottom:1px solid var(--border);
-  padding:16px 20px 0;
-  position:sticky;
-  top:0;
-  z-index:100;
-}
-.app-title{
-  font-size:18px;
-  font-weight:500;
-  font-family:'Noto Serif JP',serif;
-  letter-spacing:0.02em;
-  margin-bottom:14px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.app-title span{
-  font-size:13px;
-  font-weight:400;
-  color:var(--text2);
-  font-family:'Noto Sans TC',sans-serif;
-}
-.tab-nav{
-  display:flex;
-  gap:0;
-}
-.tab-btn{
-  flex:1;
-  padding:10px 0;
-  font-size:13px;
-  font-family:'Noto Sans TC',sans-serif;
-  border:none;
-  background:transparent;
-  color:var(--text3);
-  cursor:pointer;
-  border-bottom:2px solid transparent;
-  transition:all .2s;
-}
-.tab-btn.active{
-  color:var(--accent);
-  border-bottom-color:var(--accent);
-  font-weight:500;
-}
-.tab-content{display:none;padding:16px 16px 80px}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;max-width:480px;margin:0 auto;}
+.app-header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 20px 0;position:sticky;top:0;z-index:100;}
+.app-title{font-size:17px;font-weight:500;font-family:'Noto Serif JP',serif;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.app-title span{font-size:12px;font-weight:400;color:var(--text2);font-family:'Noto Sans TC',sans-serif;}
+.mode-row{display:flex;gap:6px;margin-bottom:10px;}
+.mode-btn{flex:1;padding:6px 0;font-size:12px;border:1px solid var(--border);border-radius:20px;background:var(--surface2);color:var(--text2);cursor:pointer;font-family:'Noto Serif JP',serif;}
+.mode-btn.active-hira{background:var(--accent-light);border-color:var(--accent);color:var(--accent-text);font-weight:500;}
+.mode-btn.active-kata{background:var(--kata-light);border-color:var(--kata);color:var(--kata-text);font-weight:500;}
+.tab-nav{display:flex;}
+.tab-btn{flex:1;padding:9px 0;font-size:13px;font-family:'Noto Sans TC',sans-serif;border:none;background:transparent;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:500;}
+.tab-content{display:none;padding:14px 14px 80px}
 .tab-content.active{display:block}
 
-/* 詳細面板 */
-.detail-card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:20px;
-  margin-bottom:16px;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-.detail-main{display:flex;align-items:center;gap:20px}
-.big-char{
-  font-family:'Noto Serif JP',serif;
-  font-size:80px;
-  line-height:1;
-  color:var(--text);
-  min-width:90px;
-  text-align:center;
-}
-.detail-info{}
-.detail-rom{
-  font-size:28px;
-  font-weight:500;
-  color:var(--accent);
-  letter-spacing:0.05em;
-  font-family:'Noto Serif JP',serif;
-}
-.detail-tip{
-  font-size:13px;
-  color:var(--text2);
-  margin-top:6px;
-  line-height:1.5;
-}
-.detail-example{
-  font-size:12px;
-  color:var(--text3);
-  margin-top:4px;
-}
-.speak-btn{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  width:100%;
-  padding:12px;
-  background:var(--accent-light);
-  border:1px solid var(--accent);
-  border-radius:var(--radius-sm);
-  color:var(--accent-text);
-  font-size:14px;
-  font-family:'Noto Sans TC',sans-serif;
-  cursor:pointer;
-  transition:background .15s;
-}
-.speak-btn:active{background:#D4EDDA}
-.speak-icon{font-size:18px}
+/* 詳細卡片 */
+.detail-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
+.detail-top{display:flex;align-items:center;gap:16px;margin-bottom:12px;}
+.big-char{font-family:'Noto Serif JP',serif;font-size:72px;line-height:1;color:var(--text);min-width:80px;text-align:center;}
+.detail-info{flex:1;}
+.detail-rom{font-size:26px;font-weight:500;color:var(--accent);letter-spacing:0.05em;font-family:'Noto Serif JP',serif;}
+.detail-rom.kata{color:var(--kata);}
+.detail-tip{font-size:12px;color:var(--text2);margin-top:5px;line-height:1.5;}
+.words-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.word-chip{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;transition:background .15s;}
+.word-chip:active{background:var(--border);}
+.word-jp{font-family:'Noto Serif JP',serif;font-size:15px;color:var(--text);}
+.word-meaning{font-size:11px;color:var(--text3);margin-top:2px;}
+.speak-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;background:var(--accent-light);border:1px solid var(--accent);border-radius:var(--radius-sm);color:var(--accent-text);font-size:14px;font-family:'Noto Sans TC',sans-serif;cursor:pointer;}
+.speak-btn.kata{background:var(--kata-light);border-color:var(--kata);color:var(--kata-text);}
+.speak-btn:active{opacity:.8;}
 
-/* 行標籤 */
-.row-label{
-  font-size:11px;
-  color:var(--text3);
-  font-weight:500;
-  letter-spacing:0.05em;
-  margin:14px 0 6px;
-  padding-left:2px;
-}
+/* 手寫區 */
+.write-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px;}
+.write-title{font-size:12px;color:var(--text3);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.clear-btn{font-size:11px;color:var(--text3);background:none;border:1px solid var(--border);border-radius:6px;padding:3px 8px;cursor:pointer;}
+canvas{display:block;width:100%;height:180px;background:#FAFAF8;border:1px solid var(--border);border-radius:8px;touch-action:none;cursor:crosshair;}
+.write-hint{font-size:11px;color:var(--text3);text-align:center;margin-top:6px;}
 
-/* 假名格 */
-.kana-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:6px;
-  margin-bottom:4px;
-}
-.kana-card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius-sm);
-  padding:10px 4px;
-  text-align:center;
-  cursor:pointer;
-  transition:all .15s;
-  min-height:58px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
+/* 格線 */
+.row-label{font-size:11px;color:var(--text3);font-weight:500;margin:12px 0 5px;padding-left:2px;}
+.kana-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:4px;}
+.kana-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 4px;text-align:center;cursor:pointer;transition:all .15s;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 .kana-card:active{transform:scale(0.95)}
-.kana-card.learned{
-  background:var(--accent-light);
-  border-color:var(--accent);
-}
-.kana-card.active{
-  background:var(--info-light);
-  border-color:var(--info);
-}
-.kana-char{
-  font-family:'Noto Serif JP',serif;
-  font-size:24px;
-  color:var(--text);
-  line-height:1.2;
-}
-.kana-card.learned .kana-char{color:var(--accent-text)}
-.kana-card.active .kana-char{color:var(--info)}
-.kana-rom{
-  font-size:10px;
-  color:var(--text3);
-  margin-top:2px;
-  letter-spacing:0.03em;
-}
-.kana-card.learned .kana-rom{color:var(--accent)}
-.kana-card.active .kana-rom{color:var(--info)}
-.kana-empty{background:transparent;border-color:transparent;cursor:default}
+.kana-card.learned{background:var(--accent-light);border-color:var(--accent);}
+.kana-card.learned-kata{background:var(--kata-light);border-color:var(--kata);}
+.kana-card.sel{background:var(--surface2);border-color:var(--text2);}
+.kana-char{font-family:'Noto Serif JP',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.kana-card.learned .kana-char{color:var(--accent-text);}
+.kana-card.learned-kata .kana-char{color:var(--kata-text);}
+.kana-rom{font-size:10px;color:var(--text3);margin-top:1px;}
+.kana-empty{background:transparent!important;border-color:transparent!important;cursor:default;}
 
 /* 測驗 */
-.quiz-card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:24px 20px;
-  text-align:center;
-  margin-bottom:14px;
-}
-.quiz-prompt{
-  font-size:13px;
-  color:var(--text2);
-  margin-bottom:16px;
-}
-.quiz-char{
-  font-family:'Noto Serif JP',serif;
-  font-size:72px;
-  color:var(--text);
-  line-height:1;
-  margin-bottom:20px;
-}
-.quiz-opts{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-.quiz-opt{
-  padding:14px;
-  border:1px solid var(--border);
-  border-radius:var(--radius-sm);
-  background:var(--surface2);
-  font-size:15px;
-  font-family:'Noto Serif JP',serif;
-  cursor:pointer;
-  color:var(--text);
-  transition:all .15s;
-  letter-spacing:0.05em;
-}
+.quiz-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;margin-bottom:12px;}
+.quiz-mode-row{display:flex;gap:6px;margin-bottom:14px;}
+.quiz-mode-btn{flex:1;padding:7px;font-size:12px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text2);cursor:pointer;}
+.quiz-mode-btn.on{background:var(--accent-light);border-color:var(--accent);color:var(--accent-text);font-weight:500;}
+.quiz-char{font-family:'Noto Serif JP',serif;font-size:68px;color:var(--text);line-height:1;margin-bottom:18px;}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.quiz-opt{padding:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);font-size:14px;font-family:'Noto Serif JP',serif;cursor:pointer;color:var(--text);transition:all .15s;}
 .quiz-opt:active{transform:scale(0.97)}
-.quiz-opt.correct{background:var(--accent-light);border-color:var(--accent);color:var(--accent-text)}
-.quiz-opt.wrong{background:var(--danger-light);border-color:var(--danger);color:var(--danger)}
-.quiz-feedback{
-  font-size:13px;
-  color:var(--text2);
-  margin-top:14px;
-  min-height:20px;
-  line-height:1.5;
-}
-.next-btn{
-  width:100%;
-  padding:14px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius-sm);
-  font-size:14px;
-  font-family:'Noto Sans TC',sans-serif;
-  color:var(--text);
-  cursor:pointer;
-  transition:background .15s;
-}
-.next-btn:active{background:var(--surface2)}
+.quiz-opt.correct{background:var(--accent-light);border-color:var(--accent);color:var(--accent-text);}
+.quiz-opt.wrong{background:var(--danger-light);border-color:var(--danger);color:var(--danger);}
+.quiz-feedback{font-size:13px;color:var(--text2);margin-top:12px;min-height:18px;line-height:1.5;}
+.next-btn{width:100%;padding:13px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'Noto Sans TC',sans-serif;color:var(--text);cursor:pointer;}
+.next-btn:active{background:var(--surface2);}
 
 /* 進度 */
-.stats-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:10px;
-  margin-bottom:16px;
-}
-.stat-box{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius-sm);
-  padding:14px 8px;
-  text-align:center;
-}
-.stat-num{font-size:24px;font-weight:500;color:var(--text)}
-.stat-lbl{font-size:11px;color:var(--text3);margin-top:4px}
-.progress-wrap{margin-bottom:6px}
-.progress-track{
-  height:6px;
-  background:var(--surface2);
-  border-radius:3px;
-  overflow:hidden;
-  margin-bottom:6px;
-}
-.progress-fill{
-  height:100%;
-  background:var(--accent);
-  border-radius:3px;
-  transition:width .4s ease;
-}
-.progress-label{font-size:12px;color:var(--text3);text-align:center;margin-bottom:20px}
-.action-btn{
-  display:block;
-  width:100%;
-  padding:14px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius-sm);
-  font-size:14px;
-  font-family:'Noto Sans TC',sans-serif;
-  color:var(--text);
-  cursor:pointer;
-  text-align:center;
-  margin-bottom:10px;
-  transition:background .15s;
-  text-decoration:none;
-}
-.action-btn:active{background:var(--surface2)}
-.action-btn.danger{color:var(--danger);border-color:#F5C6C2}
-
-/* 底部安全區 */
-.safe-area{height:env(safe-area-inset-bottom, 20px)}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.stat-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 8px;text-align:center;}
+.stat-num{font-size:22px;font-weight:500;color:var(--text);}
+.stat-lbl{font-size:10px;color:var(--text3);margin-top:3px;}
+.section-title{font-size:12px;color:var(--text3);margin:14px 0 6px;}
+.progress-track{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:5px;}
+.progress-fill{height:100%;border-radius:3px;transition:width .4s ease;}
+.progress-fill.hira{background:var(--accent);}
+.progress-fill.kata{background:var(--kata);}
+.progress-label{font-size:11px;color:var(--text3);margin-bottom:14px;}
+.action-btn{display:block;width:100%;padding:13px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'Noto Sans TC',sans-serif;color:var(--text);cursor:pointer;text-align:center;margin-bottom:8px;}
+.action-btn.danger{color:var(--danger);border-color:#F5C6C2;}
+.safe-area{height:env(safe-area-inset-bottom,20px);}
 </style>
 </head>
 <body>
-
 <div class="app-header">
-  <div class="app-title">
-    ひらがな <span>50音學習</span>
+  <div class="app-title">日文Go <span>五十音學習</span></div>
+  <div class="mode-row">
+    <button class="mode-btn active-hira" id="mode-hira" onclick="setMode('hira')">ひらがな　平假名</button>
+    <button class="mode-btn" id="mode-kata" onclick="setMode('kata')">カタカナ　片假名</button>
   </div>
   <nav class="tab-nav">
     <button class="tab-btn active" onclick="setTab('learn')">學習</button>
@@ -337,19 +123,24 @@ body{
 <!-- 學習頁 -->
 <div class="tab-content active" id="tab-learn">
   <div class="detail-card">
-    <div class="detail-main">
+    <div class="detail-top">
       <div class="big-char" id="d-char">あ</div>
       <div class="detail-info">
         <div class="detail-rom" id="d-rom">a</div>
         <div class="detail-tip" id="d-tip">嘴巴張開，發「啊」的音</div>
-        <div class="detail-example" id="d-eg">例：あおい（aoi）藍色</div>
       </div>
     </div>
-    
-    <button class="speak-btn" onclick="speak(currentChar)">
-      <span class="speak-icon">♪</span>
-      朗讀發音
-    </button>
+    <div class="words-row" id="d-words"></div>
+    <button class="speak-btn" id="speak-btn" onclick="speak(currentChar)">♪ 朗讀發音</button>
+  </div>
+
+  <div class="write-section">
+    <div class="write-title">
+      <span>✏️ 手寫練習</span>
+      <button class="clear-btn" onclick="clearCanvas()">清除</button>
+    </div>
+    <canvas id="write-canvas"></canvas>
+    <div class="write-hint" id="write-hint">用手指或滑鼠寫寫看「あ」</div>
   </div>
 
   <div id="kana-rows"></div>
@@ -358,7 +149,11 @@ body{
 <!-- 測驗頁 -->
 <div class="tab-content" id="tab-quiz">
   <div class="quiz-card">
-    <div class="quiz-prompt">這個假名的讀音是？</div>
+    <div class="quiz-mode-row">
+      <button class="quiz-mode-btn on" id="qm-hira" onclick="setQuizMode('hira')">平假名</button>
+      <button class="quiz-mode-btn" id="qm-kata" onclick="setQuizMode('kata')">片假名</button>
+      <button class="quiz-mode-btn" id="qm-both" onclick="setQuizMode('both')">混合</button>
+    </div>
     <div class="quiz-char" id="q-char">あ</div>
     <div class="quiz-opts" id="q-opts"></div>
     <div class="quiz-feedback" id="q-feedback"></div>
@@ -369,156 +164,165 @@ body{
 <!-- 進度頁 -->
 <div class="tab-content" id="tab-stats">
   <div class="stats-grid">
-    <div class="stat-box">
-      <div class="stat-num" id="s-learned">0</div>
-      <div class="stat-lbl">已學習</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num">46</div>
-      <div class="stat-lbl">總假名</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" id="s-correct">0</div>
-      <div class="stat-lbl">答對次數</div>
-    </div>
+    <div class="stat-box"><div class="stat-num" id="s-learned">0</div><div class="stat-lbl">已學習</div></div>
+    <div class="stat-box"><div class="stat-num">92</div><div class="stat-lbl">總假名</div></div>
+    <div class="stat-box"><div class="stat-num" id="s-correct">0</div><div class="stat-lbl">答對次數</div></div>
   </div>
-  <div class="progress-wrap">
-    <div class="progress-track"><div class="progress-fill" id="prog" style="width:0%"></div></div>
-    <div class="progress-label" id="prog-label">學習進度 0 / 46</div>
-  </div>
-  <button class="action-btn danger" onclick="resetProgress()">重置學習進度</button>
+  <div class="section-title">平假名進度</div>
+  <div class="progress-track"><div class="progress-fill hira" id="prog-hira" style="width:0%"></div></div>
+  <div class="progress-label" id="prog-hira-label">0 / 46</div>
+  <div class="section-title">片假名進度</div>
+  <div class="progress-track"><div class="progress-fill kata" id="prog-kata" style="width:0%"></div></div>
+  <div class="progress-label" id="prog-kata-label">0 / 46</div>
+  <button class="action-btn danger" onclick="resetProgress()">重置所有進度</button>
 </div>
-
 <div class="safe-area"></div>
 
 <script>
-const ROWS = [
+// ── 資料 ──────────────────────────────────────────────
+const HIRA_ROWS = [
   {label:'あ行 — 母音', items:[
-    {c:'あ',r:'a',t:'嘴巴張開，發「啊」的音',e:'あおい (aoi) 藍色'},
-    {c:'い',r:'i',t:'嘴角橫拉，發「一」的音',e:'いぬ (inu) 狗'},
-    {c:'う',r:'u',t:'嘴唇微圓，發「烏」的音',e:'うみ (umi) 海'},
-    {c:'え',r:'e',t:'嘴型開，發「欸」的音',e:'えき (eki) 車站'},
-    {c:'お',r:'o',t:'嘴巴圓，發「喔」的音',e:'おちゃ (ocha) 茶'},
+    {c:'あ',r:'a',t:'嘴巴張開，發「啊」',w:[{j:'あおい',r:'aoi',m:'藍色'},{j:'あめ',r:'ame',m:'雨'},{j:'あさ',r:'asa',m:'早晨'}]},
+    {c:'い',r:'i',t:'嘴角橫拉，發「一」',w:[{j:'いぬ',r:'inu',m:'狗'},{j:'いけ',r:'ike',m:'池塘'},{j:'いす',r:'isu',m:'椅子'}]},
+    {c:'う',r:'u',t:'嘴唇微圓，發「烏」',w:[{j:'うみ',r:'umi',m:'海'},{j:'うた',r:'uta',m:'歌'},{j:'うえ',r:'ue',m:'上面'}]},
+    {c:'え',r:'e',t:'嘴型開，發「欸」',w:[{j:'えき',r:'eki',m:'車站'},{j:'えん',r:'en',m:'日圓'},{j:'えほん',r:'ehon',m:'繪本'}]},
+    {c:'お',r:'o',t:'嘴巴圓，發「喔」',w:[{j:'おちゃ',r:'ocha',m:'茶'},{j:'おかあさん',r:'okaasan',m:'媽媽'},{j:'おみせ',r:'omise',m:'商店'}]},
   ]},
   {label:'か行', items:[
-    {c:'か',r:'ka',t:'k + a，輕聲發「卡」',e:'かさ (kasa) 雨傘'},
-    {c:'き',r:'ki',t:'k + i，發「幾」的音',e:'きって (kitte) 郵票'},
-    {c:'く',r:'ku',t:'k + u，發「庫」的音',e:'くつ (kutsu) 鞋子'},
-    {c:'け',r:'ke',t:'k + e，發「克」的音',e:'けさ (kesa) 今天早晨'},
-    {c:'こ',r:'ko',t:'k + o，發「口」的音',e:'こども (kodomo) 小孩'},
+    {c:'か',r:'ka',t:'輕聲發「卡」',w:[{j:'かさ',r:'kasa',m:'雨傘'},{j:'かわ',r:'kawa',m:'河川'},{j:'かぜ',r:'kaze',m:'風'}]},
+    {c:'き',r:'ki',t:'發「幾」的音',w:[{j:'きって',r:'kitte',m:'郵票'},{j:'きく',r:'kiku',m:'菊花'},{j:'きもの',r:'kimono',m:'和服'}]},
+    {c:'く',r:'ku',t:'發「庫」的音',w:[{j:'くつ',r:'kutsu',m:'鞋子'},{j:'くも',r:'kumo',m:'雲'},{j:'くに',r:'kuni',m:'國家'}]},
+    {c:'け',r:'ke',t:'發「克」的音',w:[{j:'けさ',r:'kesa',m:'今天早晨'},{j:'けむり',r:'kemuri',m:'煙'},{j:'けが',r:'kega',m:'受傷'}]},
+    {c:'こ',r:'ko',t:'發「口」的音',w:[{j:'こども',r:'kodomo',m:'小孩'},{j:'こえ',r:'koe',m:'聲音'},{j:'こうえん',r:'kouen',m:'公園'}]},
   ]},
   {label:'さ行', items:[
-    {c:'さ',r:'sa',t:'s + a，發「撒」的音',e:'さかな (sakana) 魚'},
-    {c:'し',r:'shi',t:'類似「西」，嘴角微拉',e:'しお (shio) 鹽'},
-    {c:'す',r:'su',t:'s + u，發「蘇」的音',e:'すし (sushi) 壽司'},
-    {c:'せ',r:'se',t:'s + e，發「色」的音',e:'せんせい (sensei) 老師'},
-    {c:'そ',r:'so',t:'s + o，發「索」的音',e:'そら (sora) 天空'},
+    {c:'さ',r:'sa',t:'發「撒」的音',w:[{j:'さかな',r:'sakana',m:'魚'},{j:'さくら',r:'sakura',m:'櫻花'},{j:'さとう',r:'satou',m:'砂糖'}]},
+    {c:'し',r:'shi',t:'類似「西」',w:[{j:'しお',r:'shio',m:'鹽'},{j:'しろ',r:'shiro',m:'白色'},{j:'しんかんせん',r:'shinkansen',m:'新幹線'}]},
+    {c:'す',r:'su',t:'發「蘇」的音',w:[{j:'すし',r:'sushi',m:'壽司'},{j:'すいか',r:'suika',m:'西瓜'},{j:'すなば',r:'sunaba',m:'沙坑'}]},
+    {c:'せ',r:'se',t:'發「色」的音',w:[{j:'せんせい',r:'sensei',m:'老師'},{j:'せかい',r:'sekai',m:'世界'},{j:'せなか',r:'senaka',m:'背部'}]},
+    {c:'そ',r:'so',t:'發「索」的音',w:[{j:'そら',r:'sora',m:'天空'},{j:'そば',r:'soba',m:'蕎麥麵'},{j:'そうじ',r:'souji',m:'打掃'}]},
   ]},
   {label:'た行', items:[
-    {c:'た',r:'ta',t:'t + a，發「它」的音',e:'たべる (taberu) 吃'},
-    {c:'ち',r:'chi',t:'類似「七」，嘴角微拉',e:'ちかてつ (chikatetsu) 地鐵'},
-    {c:'つ',r:'tsu',t:'像「次」，舌尖抵上齒',e:'つき (tsuki) 月亮'},
-    {c:'て',r:'te',t:'t + e，發「貼」的音',e:'てがみ (tegami) 信件'},
-    {c:'と',r:'to',t:'t + o，發「托」的音',e:'とけい (tokei) 時鐘'},
+    {c:'た',r:'ta',t:'發「它」的音',w:[{j:'たべる',r:'taberu',m:'吃'},{j:'たこ',r:'tako',m:'章魚'},{j:'たいよう',r:'taiyou',m:'太陽'}]},
+    {c:'ち',r:'chi',t:'類似「七」',w:[{j:'ちかてつ',r:'chikatetsu',m:'地鐵'},{j:'ちず',r:'chizu',m:'地圖'},{j:'ちから',r:'chikara',m:'力量'}]},
+    {c:'つ',r:'tsu',t:'舌尖抵上齒，「次」',w:[{j:'つき',r:'tsuki',m:'月亮'},{j:'つくえ',r:'tsukue',m:'桌子'},{j:'つばめ',r:'tsubame',m:'燕子'}]},
+    {c:'て',r:'te',t:'發「貼」的音',w:[{j:'てがみ',r:'tegami',m:'信件'},{j:'てんき',r:'tenki',m:'天氣'},{j:'てつどう',r:'tetsudou',m:'鐵路'}]},
+    {c:'と',r:'to',t:'發「托」的音',w:[{j:'とけい',r:'tokei',m:'時鐘'},{j:'とり',r:'tori',m:'鳥'},{j:'とうきょう',r:'toukyou',m:'東京'}]},
   ]},
   {label:'な行', items:[
-    {c:'な',r:'na',t:'n + a，發「那」的音',e:'なまえ (namae) 名字'},
-    {c:'に',r:'ni',t:'n + i，發「你」的音',e:'にほん (nihon) 日本'},
-    {c:'ぬ',r:'nu',t:'n + u，發「奴」的音',e:'ぬの (nuno) 布料'},
-    {c:'ね',r:'ne',t:'n + e，發「呢」的音',e:'ねこ (neko) 貓'},
-    {c:'の',r:'no',t:'n + o，發「呢喔」的音',e:'のみもの (nomimono) 飲料'},
+    {c:'な',r:'na',t:'發「那」的音',w:[{j:'なまえ',r:'namae',m:'名字'},{j:'なつ',r:'natsu',m:'夏天'},{j:'なに',r:'nani',m:'什麼'}]},
+    {c:'に',r:'ni',t:'發「你」的音',w:[{j:'にほん',r:'nihon',m:'日本'},{j:'にく',r:'niku',m:'肉'},{j:'にじ',r:'niji',m:'彩虹'}]},
+    {c:'ぬ',r:'nu',t:'發「奴」的音',w:[{j:'ぬの',r:'nuno',m:'布料'},{j:'ぬいぐるみ',r:'nuigurumi',m:'玩偶'},{j:'ぬま',r:'numa',m:'沼澤'}]},
+    {c:'ね',r:'ne',t:'發「呢」的音',w:[{j:'ねこ',r:'neko',m:'貓'},{j:'ねつ',r:'netsu',m:'發燒'},{j:'ねがい',r:'negai',m:'願望'}]},
+    {c:'の',r:'no',t:'發「呢喔」的音',w:[{j:'のみもの',r:'nomimono',m:'飲料'},{j:'のり',r:'nori',m:'海苔'},{j:'のやま',r:'noyama',m:'山野'}]},
   ]},
   {label:'は行', items:[
-    {c:'は',r:'ha',t:'h + a，發「哈」的音',e:'はな (hana) 花'},
-    {c:'ひ',r:'hi',t:'h + i，發「嘿」的音',e:'ひと (hito) 人'},
-    {c:'ふ',r:'fu',t:'輕輕吹氣，發「夫」',e:'ふじさん (Fujisan) 富士山'},
-    {c:'へ',r:'he',t:'h + e，發「黑」的音',e:'へや (heya) 房間'},
-    {c:'ほ',r:'ho',t:'h + o，發「呵」的音',e:'ほし (hoshi) 星星'},
+    {c:'は',r:'ha',t:'發「哈」的音',w:[{j:'はな',r:'hana',m:'花'},{j:'はし',r:'hashi',m:'筷子'},{j:'はなび',r:'hanabi',m:'煙火'}]},
+    {c:'ひ',r:'hi',t:'發「嘿」的音',w:[{j:'ひと',r:'hito',m:'人'},{j:'ひかり',r:'hikari',m:'光'},{j:'ひこうき',r:'hikouki',m:'飛機'}]},
+    {c:'ふ',r:'fu',t:'輕輕吹氣，「夫」',w:[{j:'ふじさん',r:'fujisan',m:'富士山'},{j:'ふね',r:'fune',m:'船'},{j:'ふゆ',r:'fuyu',m:'冬天'}]},
+    {c:'へ',r:'he',t:'發「黑」的音',w:[{j:'へや',r:'heya',m:'房間'},{j:'へいわ',r:'heiwa',m:'和平'},{j:'へそ',r:'heso',m:'肚臍'}]},
+    {c:'ほ',r:'ho',t:'發「呵」的音',w:[{j:'ほし',r:'hoshi',m:'星星'},{j:'ほん',r:'hon',m:'書'},{j:'ほてる',r:'hoteru',m:'飯店'}]},
   ]},
   {label:'ま行', items:[
-    {c:'ま',r:'ma',t:'m + a，發「媽」的音',e:'まち (machi) 城市'},
-    {c:'み',r:'mi',t:'m + i，發「米」的音',e:'みず (mizu) 水'},
-    {c:'む',r:'mu',t:'m + u，發「木」的音',e:'むすこ (musuko) 兒子'},
-    {c:'め',r:'me',t:'m + e，發「每」的音',e:'めがね (megane) 眼鏡'},
-    {c:'も',r:'mo',t:'m + o，發「摸」的音',e:'もり (mori) 森林'},
+    {c:'ま',r:'ma',t:'發「媽」的音',w:[{j:'まち',r:'machi',m:'城市'},{j:'まつり',r:'matsuri',m:'祭典'},{j:'まど',r:'mado',m:'窗戶'}]},
+    {c:'み',r:'mi',t:'發「米」的音',w:[{j:'みず',r:'mizu',m:'水'},{j:'みち',r:'michi',m:'道路'},{j:'みなと',r:'minato',m:'港口'}]},
+    {c:'む',r:'mu',t:'發「木」的音',w:[{j:'むすこ',r:'musuko',m:'兒子'},{j:'むし',r:'mushi',m:'蟲'},{j:'むら',r:'mura',m:'村莊'}]},
+    {c:'め',r:'me',t:'發「每」的音',w:[{j:'めがね',r:'megane',m:'眼鏡'},{j:'めだか',r:'medaka',m:'鱂魚'},{j:'めいし',r:'meishi',m:'名片'}]},
+    {c:'も',r:'mo',t:'發「摸」的音',w:[{j:'もり',r:'mori',m:'森林'},{j:'もち',r:'mochi',m:'麻糬'},{j:'もみじ',r:'momiji',m:'楓葉'}]},
   ]},
   {label:'や行', items:[
-    {c:'や',r:'ya',t:'y + a，發「呀」的音',e:'やま (yama) 山'},
+    {c:'や',r:'ya',t:'發「呀」的音',w:[{j:'やま',r:'yama',m:'山'},{j:'やさい',r:'yasai',m:'蔬菜'},{j:'やきとり',r:'yakitori',m:'烤雞串'}]},
     null,
-    {c:'ゆ',r:'yu',t:'y + u，發「友」的音',e:'ゆき (yuki) 雪'},
+    {c:'ゆ',r:'yu',t:'發「友」的音',w:[{j:'ゆき',r:'yuki',m:'雪'},{j:'ゆめ',r:'yume',m:'夢'},{j:'ゆびわ',r:'yubiwa',m:'戒指'}]},
     null,
-    {c:'よ',r:'yo',t:'y + o，發「喲」的音',e:'よる (yoru) 夜晚'},
+    {c:'よ',r:'yo',t:'發「喲」的音',w:[{j:'よる',r:'yoru',m:'夜晚'},{j:'よやく',r:'yoyaku',m:'預約'},{j:'ようじ',r:'youji',m:'牙籤'}]},
   ]},
   {label:'ら行', items:[
-    {c:'ら',r:'ra',t:'介於r和l之間，發「啦」',e:'らーめん (ramen) 拉麵'},
-    {c:'り',r:'ri',t:'介於r和l之間，發「里」',e:'りょこう (ryoko) 旅行'},
-    {c:'る',r:'ru',t:'介於r和l之間，發「路」',e:'るすばん (rusuban) 留守'},
-    {c:'れ',r:'re',t:'介於r和l之間，發「雷」',e:'れすとらん (resutoran) 餐廳'},
-    {c:'ろ',r:'ro',t:'介於r和l之間，發「囉」',e:'ろっく (rokku) 搖滾'},
+    {c:'ら',r:'ra',t:'介於r和l之間',w:[{j:'らーめん',r:'ramen',m:'拉麵'},{j:'らく',r:'raku',m:'輕鬆'},{j:'らんぷ',r:'ranpu',m:'燈'}]},
+    {c:'り',r:'ri',t:'介於r和l之間',w:[{j:'りょこう',r:'ryokou',m:'旅行'},{j:'りんご',r:'ringo',m:'蘋果'},{j:'りょかん',r:'ryokan',m:'旅館'}]},
+    {c:'る',r:'ru',t:'介於r和l之間',w:[{j:'るすばん',r:'rusuban',m:'留守'},{j:'るーと',r:'ruuto',m:'路線'},{j:'るびー',r:'rubii',m:'紅寶石'}]},
+    {c:'れ',r:'re',t:'介於r和l之間',w:[{j:'れすとらん',r:'resutoran',m:'餐廳'},{j:'れきし',r:'rekishi',m:'歷史'},{j:'れんしゅう',r:'renshuu',m:'練習'}]},
+    {c:'ろ',r:'ro',t:'介於r和l之間',w:[{j:'ろっく',r:'rokku',m:'搖滾'},{j:'ろうか',r:'rouka',m:'走廊'},{j:'ろうそく',r:'rousoku',m:'蠟燭'}]},
   ]},
   {label:'わ行 ／ ん', items:[
-    {c:'わ',r:'wa',t:'w + a，發「哇」的音',e:'わたし (watashi) 我'},
+    {c:'わ',r:'wa',t:'發「哇」的音',w:[{j:'わたし',r:'watashi',m:'我'},{j:'わしょく',r:'washoku',m:'日本料理'},{j:'わかる',r:'wakaru',m:'明白'}]},
     null,null,null,
-    {c:'を',r:'wo/o',t:'唸「喔」，作受格助詞用',e:'ほんをよむ 讀書'},
-    {c:'ん',r:'n',t:'鼻音，發「嗯」的音',e:'でんしゃ (densha) 電車'},
+    {c:'を',r:'wo/o',t:'受格助詞，唸「喔」',w:[{j:'ほんをよむ',r:'hon wo yomu',m:'讀書'},{j:'みずをのむ',r:'mizu wo nomu',m:'喝水'}]},
+    {c:'ん',r:'n',t:'鼻音，發「嗯」',w:[{j:'でんしゃ',r:'densha',m:'電車'},{j:'おんがく',r:'ongaku',m:'音樂'},{j:'てんき',r:'tenki',m:'天氣'}]},
   ]},
 ];
 
-let currentChar = 'あ';
-let learned = new Set(JSON.parse(localStorage.getItem('learned')||'[]'));
-let correctCount = parseInt(localStorage.getItem('correct')||'0');
-let quizAnswered = false;
-
-const allKana = ROWS.flatMap(r=>r.items).filter(Boolean);
-
-function saveProgress(){
-  localStorage.setItem('learned', JSON.stringify([...learned]));
-  localStorage.setItem('correct', correctCount);
-}
-
-function buildGrids(){
-  const container = document.getElementById('kana-rows');
-  ROWS.forEach(row=>{
-    const lbl = document.createElement('div');
-    lbl.className = 'row-label';
-    lbl.textContent = row.label;
-    container.appendChild(lbl);
-    const grid = document.createElement('div');
-    grid.className = 'kana-grid';
-    row.items.forEach(item=>{
-      const card = document.createElement('div');
-      if(!item){
-        card.className='kana-card kana-empty';
-      } else {
-        card.className='kana-card'+(learned.has(item.c)?' learned':'')+(item.c===currentChar?' active':'');
-        card.id='card-'+item.c;
-        card.innerHTML=`<div class="kana-char">${item.c}</div><div class="kana-rom">${item.r}</div>`;
-        card.onclick=()=>selectKana(item);
-      }
-      grid.appendChild(card);
-    });
-    container.appendChild(grid);
-  });
-}
-
-function selectKana(item){
-  document.querySelectorAll('.kana-card.active').forEach(c=>c.classList.remove('active'));
-  const card = document.getElementById('card-'+item.c);
-  if(card){
-    card.classList.add('active');
-    if(!learned.has(item.c)){
-      learned.add(item.c);
-      card.classList.add('learned');
-      saveProgress();
-    }
-  }
-  currentChar = item.c;
-  document.getElementById('d-char').textContent = item.c;
-  document.getElementById('d-rom').textContent = item.r;
-  document.getElementById('d-tip').textContent = item.t;
-  document.getElementById('d-eg').textContent = '例：' + item.e;
-  speak(item.c);
-}
+const KATA_ROWS = [
+  {label:'ア行 — 母音', items:[
+    {c:'ア',r:'a',t:'あ的片假名',w:[{j:'アイス',r:'aisu',m:'冰淇淋'},{j:'アジア',r:'ajia',m:'亞洲'},{j:'アプリ',r:'apuri',m:'APP'}]},
+    {c:'イ',r:'i',t:'い的片假名',w:[{j:'イタリア',r:'itaria',m:'義大利'},{j:'インターネット',r:'intaanetto',m:'網路'},{j:'イメージ',r:'imeeji',m:'印象'}]},
+    {c:'ウ',r:'u',t:'う的片假名',w:[{j:'ウイルス',r:'uirusu',m:'病毒'},{j:'ウォーター',r:'wootaa',m:'水'},{j:'ウサギ',r:'usagi',m:'兔子'}]},
+    {c:'エ',r:'e',t:'え的片假名',w:[{j:'エレベーター',r:'erebeetaa',m:'電梯'},{j:'エアコン',r:'eakon',m:'冷氣'},{j:'エネルギー',r:'enerugii',m:'能量'}]},
+    {c:'オ',r:'o',t:'お的片假名',w:[{j:'オレンジ',r:'orenji',m:'橘子'},{j:'オフィス',r:'ofisu',m:'辦公室'},{j:'オーストラリア',r:'oosutoraria',m:'澳洲'}]},
+  ]},
+  {label:'カ行', items:[
+    {c:'カ',r:'ka',t:'か的片假名',w:[{j:'カメラ',r:'kamera',m:'相機'},{j:'カフェ',r:'kafe',m:'咖啡廳'},{j:'カード',r:'kaado',m:'卡片'}]},
+    {c:'キ',r:'ki',t:'き的片假名',w:[{j:'キッチン',r:'kicchin',m:'廚房'},{j:'キャンプ',r:'kyanpu',m:'露營'},{j:'キロ',r:'kiro',m:'公里'}]},
+    {c:'ク',r:'ku',t:'く的片假名',w:[{j:'クラス',r:'kurasu',m:'班級'},{j:'クリスマス',r:'kurisumasu',m:'聖誕節'},{j:'クーポン',r:'kuupon',m:'優惠券'}]},
+    {c:'ケ',r:'ke',t:'け的片假名',w:[{j:'ケーキ',r:'keeki',m:'蛋糕'},{j:'ケータイ',r:'keetai',m:'手機'},{j:'ケガ',r:'kega',m:'受傷'}]},
+    {c:'コ',r:'ko',t:'こ的片假名',w:[{j:'コーヒー',r:'koohii',m:'咖啡'},{j:'コンビニ',r:'konbini',m:'便利商店'},{j:'コース',r:'koosu',m:'路線'}]},
+  ]},
+  {label:'サ行', items:[
+    {c:'サ',r:'sa',t:'さ的片假名',w:[{j:'サービス',r:'saabisu',m:'服務'},{j:'サラダ',r:'sarada',m:'沙拉'},{j:'サッカー',r:'sakkaa',m:'足球'}]},
+    {c:'シ',r:'shi',t:'し的片假名',w:[{j:'シャワー',r:'shawaa',m:'淋浴'},{j:'シーフード',r:'shiifuudo',m:'海鮮'},{j:'システム',r:'shisutemu',m:'系統'}]},
+    {c:'ス',r:'su',t:'す的片假名',w:[{j:'スーパー',r:'suupaa',m:'超市'},{j:'スマホ',r:'sumaho',m:'智慧型手機'},{j:'スタート',r:'sutaato',m:'開始'}]},
+    {c:'セ',r:'se',t:'せ的片假名',w:[{j:'セール',r:'seeru',m:'特賣'},{j:'センター',r:'sentaa',m:'中心'},{j:'セット',r:'setto',m:'套餐'}]},
+    {c:'ソ',r:'so',t:'そ的片假名',w:[{j:'ソファ',r:'sofa',m:'沙發'},{j:'ソース',r:'soosu',m:'醬料'},{j:'ソフト',r:'sofuto',m:'軟體'}]},
+  ]},
+  {label:'タ行', items:[
+    {c:'タ',r:'ta',t:'た的片假名',w:[{j:'タクシー',r:'takushii',m:'計程車'},{j:'タオル',r:'taoru',m:'毛巾'},{j:'タブレット',r:'taburetto',m:'平板'}]},
+    {c:'チ',r:'chi',t:'ち的片假名',w:[{j:'チケット',r:'chiketto',m:'票券'},{j:'チョコレート',r:'chokoreeto',m:'巧克力'},{j:'チーズ',r:'chiizu',m:'起司'}]},
+    {c:'ツ',r:'tsu',t:'つ的片假名',w:[{j:'ツアー',r:'tsuaa',m:'旅遊行程'},{j:'ツール',r:'tsuuru',m:'工具'},{j:'ツナ',r:'tsuna',m:'鮪魚'}]},
+    {c:'テ',r:'te',t:'て的片假名',w:[{j:'テレビ',r:'terebi',m:'電視'},{j:'テーブル',r:'teebu ru',m:'桌子'},{j:'テスト',r:'tesuto',m:'考試'}]},
+    {c:'ト',r:'to',t:'と的片假名',w:[{j:'トイレ',r:'toire',m:'廁所'},{j:'トマト',r:'tomato',m:'番茄'},{j:'トレイン',r:'torein',m:'列車'}]},
+  ]},
+  {label:'ナ行', items:[
+    {c:'ナ',r:'na',t:'な的片假名',w:[{j:'ナイフ',r:'naifu',m:'刀子'},{j:'ナンバー',r:'nanbaa',m:'號碼'},{j:'ナチュラル',r:'nachuraru',m:'自然'}]},
+    {c:'ニ',r:'ni',t:'に的片假名',w:[{j:'ニュース',r:'nyuusu',m:'新聞'},{j:'ニット',r:'nitto',m:'針織品'},{j:'ニコニコ',r:'nikoniko',m:'笑臉'}]},
+    {c:'ヌ',r:'nu',t:'ぬ的片假名',w:[{j:'ヌードル',r:'nuudoru',m:'麵條'},{j:'ヌード',r:'nuudo',m:'裸色'}]},
+    {c:'ネ',r:'ne',t:'ね的片假名',w:[{j:'ネット',r:'netto',m:'網路'},{j:'ネックレス',r:'nekkuresu',m:'項鍊'},{j:'ネーム',r:'niimu',m:'名字'}]},
+    {c:'ノ',r:'no',t:'の的片假名',w:[{j:'ノート',r:'nooto',m:'筆記本'},{j:'ノルウェー',r:'noruuee',m:'挪威'},{j:'ノイズ',r:'noizu',m:'噪音'}]},
+  ]},
+  {label:'ハ行', items:[
+    {c:'ハ',r:'ha',t:'は的片假名',w:[{j:'ハンバーガー',r:'hanbaagaa',m:'漢堡'},{j:'ハワイ',r:'hawai',m:'夏威夷'},{j:'ハート',r:'haato',m:'愛心'}]},
+    {c:'ヒ',r:'hi',t:'ひ的片假名',w:[{j:'ヒーター',r:'hiitaa',m:'暖氣'},{j:'ヒント',r:'hinto',m:'提示'},{j:'ヒーロー',r:'hiiroo',m:'英雄'}]},
+    {c:'フ',r:'fu',t:'ふ的片假名',w:[{j:'フライト',r:'furaito',m:'班機'},{j:'フォーク',r:'fooku',m:'叉子'},{j:'フリー',r:'furii',m:'免費'}]},
+    {c:'ヘ',r:'he',t:'へ的片假名',w:[{j:'ヘルメット',r:'herumetto',m:'安全帽'},{j:'ヘッドホン',r:'heddohon',m:'耳機'},{j:'ヘルプ',r:'herupu',m:'幫助'}]},
+    {c:'ホ',r:'ho',t:'ほ的片假名',w:[{j:'ホテル',r:'hoteru',m:'飯店'},{j:'ホーム',r:'hoomu',m:'月台'},{j:'ホワイト',r:'howaito',m:'白色'}]},
+  ]},
+  {label:'マ行', items:[
+    {c:'マ',r:'ma',t:'ま的片假名',w:[{j:'マップ',r:'mappu',m:'地圖'},{j:'マスク',r:'masuku',m:'口罩'},{j:'マクドナルド',r:'makudonarudo',m:'麥當勞'}]},
+    {c:'ミ',r:'mi',t:'み的片假名',w:[{j:'ミルク',r:'miruku',m:'牛奶'},{j:'ミュージック',r:'myuujikku',m:'音樂'},{j:'ミーティング',r:'miitingu',m:'會議'}]},
+    {c:'ム',r:'mu',t:'む的片假名',w:[{j:'ムード',r:'muudo',m:'氣氛'},{j:'ムービー',r:'muubii',m:'電影'},{j:'ムース',r:'muusu',m:'慕斯'}]},
+    {c:'メ',r:'me',t:'め的片假名',w:[{j:'メニュー',r:'menyuu',m:'菜單'},{j:'メール',r:'meeru',m:'郵件'},{j:'メモ',r:'memo',m:'備忘錄'}]},
+    {c:'モ',r:'mo',t:'も的片假名',w:[{j:'モデル',r:'moderu',m:'模型'},{j:'モバイル',r:'mobairu',m:'行動裝置'},{j:'モール',r:'mooru',m:'購物中心'}]},
+  ]},
+  {label:'ヤ行', items:[
+    {c:'ヤ',r:'ya',t:'や的片假名',w:[{j:'ヤード',r:'yaado',m:'碼（單位）'},{j:'ヤング',r:'yangu',m:'年輕'}]},
+    null,
+    {c:'ユ',r:'yu',t:'ゆ的片假名',w:[{j:'ユーザー',r:'yuuzaa',m:'使用者'},{j:'ユニフォーム',r:'yunifoomu',m:'制服'},{j:'ユーモア',r:'yuumoa',m:'幽默'}]},
+    null,
+    {c:'ヨ',r:'yo',t:'よ的片假名',w:[{j:'ヨーロッパ',r:'yooroppa',m:'歐洲'},{j:'ヨガ',r:'yoga',m:'瑜珈'},{j:'ヨット',r:'yotto',m:'遊艇'}]},
+  ]},
+  {label:'ラ行', items:[
+    {c:'ラ',r:'ra',t:'ら的片假名',w:[{j:'ラーメン',r:'raamen',m:'拉麵'},{j:'ラジオ',r:'rajio',m:'收音機'},{j:'ランチ',r:'ranchi',m:'午餐'}]},
+    {c:'リ',r:'ri',t:'り的片假名',w:[{j:'リスト',r:'risuto',m:'列表'},{j:'リモコン',r:'rimokon',m:'遙控器'},{j:'リラックス',r:'rirakkusu',m:'放鬆'}]},
+    {c:'ル',r:'ru',t:'る的片假名',w:[{j:'ルーム',r:'ruumu',m:'房間'},{j:'ルール',r:'ruuru',m:'規則'},{j:'ルート',r:'ruuto',m:'路線'}]},
+    {c:'レ',r:'re',t:'れ的片假名',w:[{j:'レストラン',r:'resutoran',m:'餐廳'},{j:'レシート',r:'reshiito',m:'收據'},{j:'レンタル',r:'rentaru',m:'租借'}]},
+    {c:'ロ',r:'ro',t:'ろ的片假名',w:[{j:'ロボット',r:'robotto',m:'機器人'},{j:'ロッカー',r:'rokkaa',m:'置物櫃'},{j:'ロールプレイ',r:'rooruplei',m:'角色扮演'}]},
+  ]},
+  {label:'ワ行 ／ ン', items:[
+    {c:'ワ',r:'wa',t:'わ的片假名',w:[{j:'ワイン',r:'wain',m:'紅酒'},{j:'ワイファイ',r:'waifai',m:'WiFi'},{j:'ワールド',r:'waarudo',m:'世界'}]},
+    null,null,null,
+    {c:'ヲ',r:'wo/o',t:'を的片假名，受格助詞',w:[{j:'（助詞）',r:'wo',m:'受格助詞'}]},
+    {c:'ン',r:'n',t:'ん的片假名，鼻音',w:[{j:'パン',r:'pan',m:'麵包'},{j:'テレビン',r:'terebin',m:'松節油'},{j:'ランプ',r:'ranpu',m:'燈'}]},
+  ]},
+];
 
 const AUDIO_MAP = {
   'あ':'a','い':'i','う':'u','え':'e','お':'o',
@@ -530,30 +334,196 @@ const AUDIO_MAP = {
   'ま':'ma','み':'mi','む':'mu','め':'me','も':'mo',
   'や':'ya','ゆ':'yu','よ':'yo',
   'ら':'ra','り':'ri','る':'ru','れ':'re','ろ':'ro',
-  'わ':'wa','を':'wo','ん':'n'
+  'わ':'wa','を':'wo','ん':'n',
+  'ア':'a','イ':'i','ウ':'u','エ':'e','オ':'o',
+  'カ':'ka','キ':'ki','ク':'ku','ケ':'ke','コ':'ko',
+  'サ':'sa','シ':'shi','ス':'su','セ':'se','ソ':'so',
+  'タ':'ta','チ':'chi','ツ':'tsu','テ':'te','ト':'to',
+  'ナ':'na','ニ':'ni','ヌ':'nu','ネ':'ne','ノ':'no',
+  'ハ':'ha','ヒ':'hi','フ':'fu','ヘ':'he','ホ':'ho',
+  'マ':'ma','ミ':'mi','ム':'mu','メ':'me','モ':'mo',
+  'ヤ':'ya','ユ':'yu','ヨ':'yo',
+  'ラ':'ra','リ':'ri','ル':'ru','レ':'re','ロ':'ro',
+  'ワ':'wa','ヲ':'wo','ン':'n'
 };
 
-let _currentAudio = null;
+// ── 狀態 ──────────────────────────────────────────────
+let mode = 'hira';
+let currentChar = 'あ';
+let currentWords = [];
+let learnedHira = new Set(JSON.parse(localStorage.getItem('lh')||'[]'));
+let learnedKata = new Set(JSON.parse(localStorage.getItem('lk')||'[]'));
+let correctCount = parseInt(localStorage.getItem('correct')||'0');
+let quizAnswered = false;
+let quizMode = 'hira';
 
+function saveProgress(){
+  localStorage.setItem('lh', JSON.stringify([...learnedHira]));
+  localStorage.setItem('lk', JSON.stringify([...learnedKata]));
+  localStorage.setItem('correct', correctCount);
+}
+
+// ── 模式切換 ──────────────────────────────────────────
+function setMode(m){
+  mode = m;
+  document.getElementById('mode-hira').className = 'mode-btn' + (m==='hira'?' active-hira':'');
+  document.getElementById('mode-kata').className = 'mode-btn' + (m==='kata'?' active-kata':'');
+  document.getElementById('speak-btn').className = 'speak-btn' + (m==='kata'?' kata':'');
+  document.getElementById('d-rom').className = 'detail-rom' + (m==='kata'?' kata':'');
+  document.getElementById('kana-rows').innerHTML = '';
+  buildGrids();
+  const firstRow = m==='hira' ? HIRA_ROWS : KATA_ROWS;
+  const first = firstRow[0].items.find(Boolean);
+  if(first) selectKana(first);
+}
+
+// ── 格子建構 ──────────────────────────────────────────
+function buildGrids(){
+  const rows = mode==='hira' ? HIRA_ROWS : KATA_ROWS;
+  const container = document.getElementById('kana-rows');
+  rows.forEach(row=>{
+    const lbl = document.createElement('div');
+    lbl.className='row-label';
+    lbl.textContent=row.label;
+    container.appendChild(lbl);
+    const grid = document.createElement('div');
+    grid.className='kana-grid';
+    row.items.forEach(item=>{
+      const card = document.createElement('div');
+      if(!item){
+        card.className='kana-card kana-empty';
+      } else {
+        const isLearned = mode==='hira' ? learnedHira.has(item.c) : learnedKata.has(item.c);
+        const learnedClass = mode==='hira' ? 'learned' : 'learned-kata';
+        card.className='kana-card'+(isLearned?' '+learnedClass:'')+(item.c===currentChar?' sel':'');
+        card.id='card-'+item.c;
+        card.innerHTML=`<div class="kana-char">${item.c}</div><div class="kana-rom">${item.r}</div>`;
+        card.onclick=()=>selectKana(item);
+      }
+      grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  });
+}
+
+function selectKana(item){
+  document.querySelectorAll('.kana-card.sel').forEach(c=>c.classList.remove('sel'));
+  const card = document.getElementById('card-'+item.c);
+  if(card){
+    card.classList.add('sel');
+    const learnedClass = mode==='hira'?'learned':'learned-kata';
+    const learnedSet = mode==='hira'?learnedHira:learnedKata;
+    if(!learnedSet.has(item.c)){
+      learnedSet.add(item.c);
+      card.classList.add(learnedClass);
+      saveProgress();
+    }
+  }
+  currentChar = item.c;
+  currentWords = item.w||[];
+  document.getElementById('d-char').textContent = item.c;
+  document.getElementById('d-rom').textContent = item.r;
+  document.getElementById('d-tip').textContent = item.t;
+  document.getElementById('write-hint').textContent = '用手指或滑鼠寫寫看「'+item.c+'」';
+  clearCanvas();
+  renderWords(item.w||[]);
+  speak(item.c);
+}
+
+function renderWords(words){
+  const container = document.getElementById('d-words');
+  container.innerHTML='';
+  words.forEach(w=>{
+    const chip = document.createElement('div');
+    chip.className='word-chip';
+    chip.innerHTML=`<div class="word-jp">${w.j}</div><div class="word-meaning">${w.r} — ${w.m}</div>`;
+    chip.onclick=()=>speakText(w.j);
+    container.appendChild(chip);
+  });
+}
+
+// ── 音檔播放 ──────────────────────────────────────────
+let _currentAudio = null;
 function speak(char){
   if(!char||!char.trim()) return;
   const file = AUDIO_MAP[char];
   if(!file) return;
-  if(_currentAudio){
-    _currentAudio.pause();
-    _currentAudio.currentTime = 0;
-    _currentAudio = null;
-  }
-  const audio = new Audio('audio/' + file + '.mp3');
+  if(_currentAudio){_currentAudio.pause();_currentAudio.currentTime=0;_currentAudio=null;}
+  const audio = new Audio('audio/'+file+'.mp3');
   _currentAudio = audio;
-  audio.play().catch(err=>{
-    console.log('Audio error:', err);
-  });
+  audio.play().catch(()=>{});
+}
+function speakText(text){
+  if(!window.speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang='ja-JP'; u.rate=0.7;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
 }
 
-function showAllVoices(){}
-function showVoiceName(){}
+// ── 手寫 Canvas ───────────────────────────────────────
+let canvas, ctx, isDrawing=false, lastX=0, lastY=0;
+function initCanvas(){
+  canvas = document.getElementById('write-canvas');
+  const dpr = window.devicePixelRatio||1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.strokeStyle = '#1A1A18';
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  drawGuide();
 
+  canvas.addEventListener('mousedown', e=>{isDrawing=true;[lastX,lastY]=getPos(e);});
+  canvas.addEventListener('mousemove', e=>{if(isDrawing)draw(e);});
+  canvas.addEventListener('mouseup', ()=>isDrawing=false);
+  canvas.addEventListener('mouseleave', ()=>isDrawing=false);
+  canvas.addEventListener('touchstart', e=>{e.preventDefault();isDrawing=true;[lastX,lastY]=getPos(e.touches[0]);},{passive:false});
+  canvas.addEventListener('touchmove', e=>{e.preventDefault();if(isDrawing)draw(e.touches[0]);},{passive:false});
+  canvas.addEventListener('touchend', ()=>isDrawing=false);
+}
+function getPos(e){
+  const r=canvas.getBoundingClientRect();
+  return [e.clientX-r.left, e.clientY-r.top];
+}
+function draw(e){
+  const [x,y]=getPos(e);
+  ctx.beginPath();
+  ctx.moveTo(lastX,lastY);
+  ctx.lineTo(x,y);
+  ctx.stroke();
+  [lastX,lastY]=[x,y];
+}
+function drawGuide(){
+  const w=canvas.getBoundingClientRect().width;
+  const h=canvas.getBoundingClientRect().height;
+  ctx.strokeStyle='#E8E6E0';
+  ctx.lineWidth=0.5;
+  ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(w/2,0);ctx.lineTo(w/2,h);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,h/2);ctx.lineTo(w,h/2);ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.strokeStyle='#1A1A18';
+  ctx.lineWidth=3;
+  // 參考字
+  ctx.font='120px serif';
+  ctx.fillStyle='rgba(0,0,0,0.06)';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillText(currentChar, w/2, h/2);
+}
+function clearCanvas(){
+  if(!canvas) return;
+  const w=canvas.getBoundingClientRect().width;
+  const h=canvas.getBoundingClientRect().height;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  drawGuide();
+}
+
+// ── Tab 切換 ──────────────────────────────────────────
 function setTab(tab){
   document.querySelectorAll('.tab-content').forEach(el=>{
     el.classList.toggle('active', el.id==='tab-'+tab);
@@ -565,32 +535,49 @@ function setTab(tab){
   if(tab==='stats') updateStats();
 }
 
+// ── 測驗 ──────────────────────────────────────────────
+function setQuizMode(m){
+  quizMode=m;
+  ['hira','kata','both'].forEach(x=>{
+    document.getElementById('qm-'+x).classList.toggle('on', x===m);
+  });
+  nextQuiz();
+}
+
+function getQuizPool(){
+  if(quizMode==='hira') return HIRA_ROWS.flatMap(r=>r.items).filter(Boolean);
+  if(quizMode==='kata') return KATA_ROWS.flatMap(r=>r.items).filter(Boolean);
+  return [...HIRA_ROWS.flatMap(r=>r.items).filter(Boolean), ...KATA_ROWS.flatMap(r=>r.items).filter(Boolean)];
+}
+
 function nextQuiz(){
-  quizAnswered = false;
-  document.getElementById('q-feedback').textContent = '';
-  const correct = allKana[Math.floor(Math.random()*allKana.length)];
-  document.getElementById('q-char').textContent = correct.c;
-  const wrongs = allKana.filter(k=>k.r!==correct.r).sort(()=>Math.random()-.5).slice(0,3);
+  quizAnswered=false;
+  document.getElementById('q-feedback').textContent='';
+  const pool = getQuizPool();
+  const correct = pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('q-char').textContent=correct.c;
+  const wrongs = pool.filter(k=>k.r!==correct.r).sort(()=>Math.random()-.5).slice(0,3);
   const opts = [...wrongs, correct].sort(()=>Math.random()-.5);
   const container = document.getElementById('q-opts');
   container.innerHTML='';
   opts.forEach(opt=>{
     const btn = document.createElement('button');
     btn.className='quiz-opt';
-    btn.textContent = opt.r;
+    btn.textContent=opt.r;
     btn.onclick=()=>{
       if(quizAnswered) return;
-      quizAnswered = true;
+      quizAnswered=true;
       if(opt.r===correct.r){
         btn.classList.add('correct');
         correctCount++;
         saveProgress();
-        document.getElementById('q-feedback').textContent = '✓ 正確！　' + correct.t;
-        if(!learned.has(correct.c)){learned.add(correct.c);saveProgress();const cd=document.getElementById('card-'+correct.c);if(cd)cd.classList.add('learned');}
+        document.getElementById('q-feedback').textContent='✓ 正確！　'+correct.t;
+        const ls = correct.c.charCodeAt(0)>=0x30A0 ? learnedKata : learnedHira;
+        if(!ls.has(correct.c)){ls.add(correct.c);saveProgress();}
       } else {
         btn.classList.add('wrong');
         container.querySelectorAll('.quiz-opt').forEach(b=>{if(b.textContent===correct.r)b.classList.add('correct');});
-        document.getElementById('q-feedback').textContent = '✗ 正確答案是「' + correct.r + '」　' + correct.t;
+        document.getElementById('q-feedback').textContent='✗ 正確答案是「'+correct.r+'」　'+correct.t;
       }
       speak(correct.c);
     };
@@ -598,29 +585,33 @@ function nextQuiz(){
   });
 }
 
+// ── 進度 ──────────────────────────────────────────────
 function updateStats(){
-  const l = learned.size;
-  document.getElementById('s-learned').textContent = l;
-  document.getElementById('s-correct').textContent = correctCount;
-  const pct = Math.round(l/46*100);
-  document.getElementById('prog').style.width = pct+'%';
-  document.getElementById('prog-label').textContent = '學習進度 '+l+' / 46（'+pct+'%）';
+  const lh=learnedHira.size, lk=learnedKata.size;
+  document.getElementById('s-learned').textContent=lh+lk;
+  document.getElementById('s-correct').textContent=correctCount;
+  document.getElementById('prog-hira').style.width=Math.round(lh/46*100)+'%';
+  document.getElementById('prog-hira-label').textContent=lh+' / 46（'+Math.round(lh/46*100)+'%）';
+  document.getElementById('prog-kata').style.width=Math.round(lk/46*100)+'%';
+  document.getElementById('prog-kata-label').textContent=lk+' / 46（'+Math.round(lk/46*100)+'%）';
 }
 
 function resetProgress(){
   if(!confirm('確定要重置所有學習進度嗎？')) return;
-  learned.clear();
-  correctCount = 0;
-  localStorage.removeItem('learned');
-  localStorage.removeItem('correct');
-  document.querySelectorAll('.kana-card').forEach(c=>{
-    c.classList.remove('learned','active');
-  });
+  learnedHira.clear(); learnedKata.clear(); correctCount=0;
+  localStorage.removeItem('lh');localStorage.removeItem('lk');localStorage.removeItem('correct');
+  document.querySelectorAll('.kana-card').forEach(c=>c.classList.remove('learned','learned-kata','sel'));
   updateStats();
 }
 
+// ── 初始化 ────────────────────────────────────────────
 buildGrids();
 updateStats();
+setTimeout(()=>{
+  initCanvas();
+  const first = HIRA_ROWS[0].items[0];
+  selectKana(first);
+}, 100);
 </script>
 </body>
 </html>
