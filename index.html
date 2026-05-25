@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="日文Go">
+<meta name="application-name" content="日文Go">
+<meta name="theme-color" content="#2D6A4F">
+<title>日文Go</title>
+<link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22%E6%97%A5%E6%96%87Go%22%2C%22short_name%22%3A%22%E6%97%A5%E6%96%87Go%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%232D6A4F%22%2C%22theme_color%22%3A%22%232D6A4F%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHNvZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI%2BPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSI5NiIgZmlsbD0iIzJENkE0RiIvPjx0ZXh0IHg9IjI1NiIgeT0iMzI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtc2l6ZT0iMjgwIiBmaWxsPSIjRjBGN0Y0Ij7jgYI8L3RleHQ%2BPC9zdmc%2B%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSI5NiIgZmlsbD0iIzJENkE0RiIvPjx0ZXh0IHg9IjI1NiIgeT0iMzI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtc2l6ZT0iMjgwIiBmaWxsPSIjRjBGN0Y0Ij7jgYI8L3RleHQ+PC9zdmc+">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#FAFAF8;
+  --surface:#FFFFFF;
+  --surface2:#F3F2EE;
+  --border:#E8E6E0;
+  --text:#1A1A18;
+  --text2:#6B6A64;
+  --text3:#9B9A94;
+  --accent:#2D6A4F;
+  --accent-light:#E8F5EE;
+  --accent-text:#1B4332;
+  --danger:#C0392B;
+  --danger-light:#FDECEA;
+  --info:#1A5276;
+  --info-light:#EBF5FB;
+  --radius:12px;
+  --radius-sm:8px;
+}
+body{
+  font-family:'Noto Sans TC',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  max-width:480px;
+  margin:0 auto;
+}
+.app-header{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:16px 20px 0;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.app-title{
+  font-size:18px;
+  font-weight:500;
+  font-family:'Noto Serif JP',serif;
+  letter-spacing:0.02em;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.app-title span{
+  font-size:13px;
+  font-weight:400;
+  color:var(--text2);
+  font-family:'Noto Sans TC',sans-serif;
+}
+.tab-nav{
+  display:flex;
+  gap:0;
+}
+.tab-btn{
+  flex:1;
+  padding:10px 0;
+  font-size:13px;
+  font-family:'Noto Sans TC',sans-serif;
+  border:none;
+  background:transparent;
+  color:var(--text3);
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:all .2s;
+}
+.tab-btn.active{
+  color:var(--accent);
+  border-bottom-color:var(--accent);
+  font-weight:500;
+}
+.tab-content{display:none;padding:16px 16px 80px}
+.tab-content.active{display:block}
+
+/* 詳細面板 */
+.detail-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+  margin-bottom:16px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.detail-main{display:flex;align-items:center;gap:20px}
+.big-char{
+  font-family:'Noto Serif JP',serif;
+  font-size:80px;
+  line-height:1;
+  color:var(--text);
+  min-width:90px;
+  text-align:center;
+}
+.detail-info{}
+.detail-rom{
+  font-size:28px;
+  font-weight:500;
+  color:var(--accent);
+  letter-spacing:0.05em;
+  font-family:'Noto Serif JP',serif;
+}
+.detail-tip{
+  font-size:13px;
+  color:var(--text2);
+  margin-top:6px;
+  line-height:1.5;
+}
+.detail-example{
+  font-size:12px;
+  color:var(--text3);
+  margin-top:4px;
+}
+.speak-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  padding:12px;
+  background:var(--accent-light);
+  border:1px solid var(--accent);
+  border-radius:var(--radius-sm);
+  color:var(--accent-text);
+  font-size:14px;
+  font-family:'Noto Sans TC',sans-serif;
+  cursor:pointer;
+  transition:background .15s;
+}
+.speak-btn:active{background:#D4EDDA}
+.speak-icon{font-size:18px}
+
+/* 行標籤 */
+.row-label{
+  font-size:11px;
+  color:var(--text3);
+  font-weight:500;
+  letter-spacing:0.05em;
+  margin:14px 0 6px;
+  padding-left:2px;
+}
+
+/* 假名格 */
+.kana-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+  margin-bottom:4px;
+}
+.kana-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 4px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .15s;
+  min-height:58px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.kana-card:active{transform:scale(0.95)}
+.kana-card.learned{
+  background:var(--accent-light);
+  border-color:var(--accent);
+}
+.kana-card.active{
+  background:var(--info-light);
+  border-color:var(--info);
+}
+.kana-char{
+  font-family:'Noto Serif JP',serif;
+  font-size:24px;
+  color:var(--text);
+  line-height:1.2;
+}
+.kana-card.learned .kana-char{color:var(--accent-text)}
+.kana-card.active .kana-char{color:var(--info)}
+.kana-rom{
+  font-size:10px;
+  color:var(--text3);
+  margin-top:2px;
+  letter-spacing:0.03em;
+}
+.kana-card.learned .kana-rom{color:var(--accent)}
+.kana-card.active .kana-rom{color:var(--info)}
+.kana-empty{background:transparent;border-color:transparent;cursor:default}
+
+/* 測驗 */
+.quiz-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px 20px;
+  text-align:center;
+  margin-bottom:14px;
+}
+.quiz-prompt{
+  font-size:13px;
+  color:var(--text2);
+  margin-bottom:16px;
+}
+.quiz-char{
+  font-family:'Noto Serif JP',serif;
+  font-size:72px;
+  color:var(--text);
+  line-height:1;
+  margin-bottom:20px;
+}
+.quiz-opts{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.quiz-opt{
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  background:var(--surface2);
+  font-size:15px;
+  font-family:'Noto Serif JP',serif;
+  cursor:pointer;
+  color:var(--text);
+  transition:all .15s;
+  letter-spacing:0.05em;
+}
+.quiz-opt:active{transform:scale(0.97)}
+.quiz-opt.correct{background:var(--accent-light);border-color:var(--accent);color:var(--accent-text)}
+.quiz-opt.wrong{background:var(--danger-light);border-color:var(--danger);color:var(--danger)}
+.quiz-feedback{
+  font-size:13px;
+  color:var(--text2);
+  margin-top:14px;
+  min-height:20px;
+  line-height:1.5;
+}
+.next-btn{
+  width:100%;
+  padding:14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  font-size:14px;
+  font-family:'Noto Sans TC',sans-serif;
+  color:var(--text);
+  cursor:pointer;
+  transition:background .15s;
+}
+.next-btn:active{background:var(--surface2)}
+
+/* 進度 */
+.stats-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin-bottom:16px;
+}
+.stat-box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:14px 8px;
+  text-align:center;
+}
+.stat-num{font-size:24px;font-weight:500;color:var(--text)}
+.stat-lbl{font-size:11px;color:var(--text3);margin-top:4px}
+.progress-wrap{margin-bottom:6px}
+.progress-track{
+  height:6px;
+  background:var(--surface2);
+  border-radius:3px;
+  overflow:hidden;
+  margin-bottom:6px;
+}
+.progress-fill{
+  height:100%;
+  background:var(--accent);
+  border-radius:3px;
+  transition:width .4s ease;
+}
+.progress-label{font-size:12px;color:var(--text3);text-align:center;margin-bottom:20px}
+.action-btn{
+  display:block;
+  width:100%;
+  padding:14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  font-size:14px;
+  font-family:'Noto Sans TC',sans-serif;
+  color:var(--text);
+  cursor:pointer;
+  text-align:center;
+  margin-bottom:10px;
+  transition:background .15s;
+  text-decoration:none;
+}
+.action-btn:active{background:var(--surface2)}
+.action-btn.danger{color:var(--danger);border-color:#F5C6C2}
+
+/* 底部安全區 */
+.safe-area{height:env(safe-area-inset-bottom, 20px)}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-title">
+    ひらがな <span>50音學習</span>
+  </div>
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="setTab('learn')">學習</button>
+    <button class="tab-btn" onclick="setTab('quiz')">測驗</button>
+    <button class="tab-btn" onclick="setTab('stats')">進度</button>
+  </nav>
+</div>
+
+<!-- 學習頁 -->
+<div class="tab-content active" id="tab-learn">
+  <div class="detail-card">
+    <div class="detail-main">
+      <div class="big-char" id="d-char">あ</div>
+      <div class="detail-info">
+        <div class="detail-rom" id="d-rom">a</div>
+        <div class="detail-tip" id="d-tip">嘴巴張開，發「啊」的音</div>
+        <div class="detail-example" id="d-eg">例：あおい（aoi）藍色</div>
+      </div>
+    </div>
+    <button class="speak-btn" onclick="speak(currentChar)">
+      <span class="speak-icon">♪</span>
+      朗讀發音
+    </button>
+  </div>
+
+  <div id="kana-rows"></div>
+</div>
+
+<!-- 測驗頁 -->
+<div class="tab-content" id="tab-quiz">
+  <div class="quiz-card">
+    <div class="quiz-prompt">這個假名的讀音是？</div>
+    <div class="quiz-char" id="q-char">あ</div>
+    <div class="quiz-opts" id="q-opts"></div>
+    <div class="quiz-feedback" id="q-feedback"></div>
+  </div>
+  <button class="next-btn" onclick="nextQuiz()">下一題 →</button>
+</div>
+
+<!-- 進度頁 -->
+<div class="tab-content" id="tab-stats">
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="stat-num" id="s-learned">0</div>
+      <div class="stat-lbl">已學習</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">46</div>
+      <div class="stat-lbl">總假名</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="s-correct">0</div>
+      <div class="stat-lbl">答對次數</div>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    <div class="progress-label" id="prog-label">學習進度 0 / 46</div>
+  </div>
+  <button class="action-btn danger" onclick="resetProgress()">重置學習進度</button>
+</div>
+
+<div class="safe-area"></div>
+
+<script>
+const ROWS = [
+  {label:'あ行 — 母音', items:[
+    {c:'あ',r:'a',t:'嘴巴張開，發「啊」的音',e:'あおい (aoi) 藍色'},
+    {c:'い',r:'i',t:'嘴角橫拉，發「一」的音',e:'いぬ (inu) 狗'},
+    {c:'う',r:'u',t:'嘴唇微圓，發「烏」的音',e:'うみ (umi) 海'},
+    {c:'え',r:'e',t:'嘴型開，發「欸」的音',e:'えき (eki) 車站'},
+    {c:'お',r:'o',t:'嘴巴圓，發「喔」的音',e:'おちゃ (ocha) 茶'},
+  ]},
+  {label:'か行', items:[
+    {c:'か',r:'ka',t:'k + a，輕聲發「卡」',e:'かさ (kasa) 雨傘'},
+    {c:'き',r:'ki',t:'k + i，發「幾」的音',e:'きって (kitte) 郵票'},
+    {c:'く',r:'ku',t:'k + u，發「庫」的音',e:'くつ (kutsu) 鞋子'},
+    {c:'け',r:'ke',t:'k + e，發「克」的音',e:'けさ (kesa) 今天早晨'},
+    {c:'こ',r:'ko',t:'k + o，發「口」的音',e:'こども (kodomo) 小孩'},
+  ]},
+  {label:'さ行', items:[
+    {c:'さ',r:'sa',t:'s + a，發「撒」的音',e:'さかな (sakana) 魚'},
+    {c:'し',r:'shi',t:'類似「西」，嘴角微拉',e:'しお (shio) 鹽'},
+    {c:'す',r:'su',t:'s + u，發「蘇」的音',e:'すし (sushi) 壽司'},
+    {c:'せ',r:'se',t:'s + e，發「色」的音',e:'せんせい (sensei) 老師'},
+    {c:'そ',r:'so',t:'s + o，發「索」的音',e:'そら (sora) 天空'},
+  ]},
+  {label:'た行', items:[
+    {c:'た',r:'ta',t:'t + a，發「它」的音',e:'たべる (taberu) 吃'},
+    {c:'ち',r:'chi',t:'類似「七」，嘴角微拉',e:'ちかてつ (chikatetsu) 地鐵'},
+    {c:'つ',r:'tsu',t:'像「次」，舌尖抵上齒',e:'つき (tsuki) 月亮'},
+    {c:'て',r:'te',t:'t + e，發「貼」的音',e:'てがみ (tegami) 信件'},
+    {c:'と',r:'to',t:'t + o，發「托」的音',e:'とけい (tokei) 時鐘'},
+  ]},
+  {label:'な行', items:[
+    {c:'な',r:'na',t:'n + a，發「那」的音',e:'なまえ (namae) 名字'},
+    {c:'に',r:'ni',t:'n + i，發「你」的音',e:'にほん (nihon) 日本'},
+    {c:'ぬ',r:'nu',t:'n + u，發「奴」的音',e:'ぬの (nuno) 布料'},
+    {c:'ね',r:'ne',t:'n + e，發「呢」的音',e:'ねこ (neko) 貓'},
+    {c:'の',r:'no',t:'n + o，發「呢喔」的音',e:'のみもの (nomimono) 飲料'},
+  ]},
+  {label:'は行', items:[
+    {c:'は',r:'ha',t:'h + a，發「哈」的音',e:'はな (hana) 花'},
+    {c:'ひ',r:'hi',t:'h + i，發「嘿」的音',e:'ひと (hito) 人'},
+    {c:'ふ',r:'fu',t:'輕輕吹氣，發「夫」',e:'ふじさん (Fujisan) 富士山'},
+    {c:'へ',r:'he',t:'h + e，發「黑」的音',e:'へや (heya) 房間'},
+    {c:'ほ',r:'ho',t:'h + o，發「呵」的音',e:'ほし (hoshi) 星星'},
+  ]},
+  {label:'ま行', items:[
+    {c:'ま',r:'ma',t:'m + a，發「媽」的音',e:'まち (machi) 城市'},
+    {c:'み',r:'mi',t:'m + i，發「米」的音',e:'みず (mizu) 水'},
+    {c:'む',r:'mu',t:'m + u，發「木」的音',e:'むすこ (musuko) 兒子'},
+    {c:'め',r:'me',t:'m + e，發「每」的音',e:'めがね (megane) 眼鏡'},
+    {c:'も',r:'mo',t:'m + o，發「摸」的音',e:'もり (mori) 森林'},
+  ]},
+  {label:'や行', items:[
+    {c:'や',r:'ya',t:'y + a，發「呀」的音',e:'やま (yama) 山'},
+    null,
+    {c:'ゆ',r:'yu',t:'y + u，發「友」的音',e:'ゆき (yuki) 雪'},
+    null,
+    {c:'よ',r:'yo',t:'y + o，發「喲」的音',e:'よる (yoru) 夜晚'},
+  ]},
+  {label:'ら行', items:[
+    {c:'ら',r:'ra',t:'介於r和l之間，發「啦」',e:'らーめん (ramen) 拉麵'},
+    {c:'り',r:'ri',t:'介於r和l之間，發「里」',e:'りょこう (ryoko) 旅行'},
+    {c:'る',r:'ru',t:'介於r和l之間，發「路」',e:'るすばん (rusuban) 留守'},
+    {c:'れ',r:'re',t:'介於r和l之間，發「雷」',e:'れすとらん (resutoran) 餐廳'},
+    {c:'ろ',r:'ro',t:'介於r和l之間，發「囉」',e:'ろっく (rokku) 搖滾'},
+  ]},
+  {label:'わ行 ／ ん', items:[
+    {c:'わ',r:'wa',t:'w + a，發「哇」的音',e:'わたし (watashi) 我'},
+    null,null,null,
+    {c:'を',r:'wo/o',t:'唸「喔」，作受格助詞用',e:'ほんをよむ 讀書'},
+    {c:'ん',r:'n',t:'鼻音，發「嗯」的音',e:'でんしゃ (densha) 電車'},
+  ]},
+];
+
+let currentChar = 'あ';
+let learned = new Set(JSON.parse(localStorage.getItem('learned')||'[]'));
+let correctCount = parseInt(localStorage.getItem('correct')||'0');
+let quizAnswered = false;
+
+const allKana = ROWS.flatMap(r=>r.items).filter(Boolean);
+
+function saveProgress(){
+  localStorage.setItem('learned', JSON.stringify([...learned]));
+  localStorage.setItem('correct', correctCount);
+}
+
+function buildGrids(){
+  const container = document.getElementById('kana-rows');
+  ROWS.forEach(row=>{
+    const lbl = document.createElement('div');
+    lbl.className = 'row-label';
+    lbl.textContent = row.label;
+    container.appendChild(lbl);
+    const grid = document.createElement('div');
+    grid.className = 'kana-grid';
+    row.items.forEach(item=>{
+      const card = document.createElement('div');
+      if(!item){
+        card.className='kana-card kana-empty';
+      } else {
+        card.className='kana-card'+(learned.has(item.c)?' learned':'')+(item.c===currentChar?' active':'');
+        card.id='card-'+item.c;
+        card.innerHTML=`<div class="kana-char">${item.c}</div><div class="kana-rom">${item.r}</div>`;
+        card.onclick=()=>selectKana(item);
+      }
+      grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  });
+}
+
+function selectKana(item){
+  document.querySelectorAll('.kana-card.active').forEach(c=>c.classList.remove('active'));
+  const card = document.getElementById('card-'+item.c);
+  if(card){
+    card.classList.add('active');
+    if(!learned.has(item.c)){
+      learned.add(item.c);
+      card.classList.add('learned');
+      saveProgress();
+    }
+  }
+  currentChar = item.c;
+  document.getElementById('d-char').textContent = item.c;
+  document.getElementById('d-rom').textContent = item.r;
+  document.getElementById('d-tip').textContent = item.t;
+  document.getElementById('d-eg').textContent = '例：' + item.e;
+  speak(item.c);
+}
+
+function speak(text){
+  if(!text||!text.trim()) return;
+  if(!window.speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'ja-JP';
+  u.rate = 0.75;
+  u.pitch = 1;
+  speechSynthesis.cancel();
+  setTimeout(()=>speechSynthesis.speak(u), 50);
+}
+
+function setTab(tab){
+  document.querySelectorAll('.tab-content').forEach(el=>{
+    el.classList.toggle('active', el.id==='tab-'+tab);
+  });
+  document.querySelectorAll('.tab-btn').forEach((btn,i)=>{
+    btn.classList.toggle('active', ['learn','quiz','stats'][i]===tab);
+  });
+  if(tab==='quiz') nextQuiz();
+  if(tab==='stats') updateStats();
+}
+
+function nextQuiz(){
+  quizAnswered = false;
+  document.getElementById('q-feedback').textContent = '';
+  const correct = allKana[Math.floor(Math.random()*allKana.length)];
+  document.getElementById('q-char').textContent = correct.c;
+  const wrongs = allKana.filter(k=>k.r!==correct.r).sort(()=>Math.random()-.5).slice(0,3);
+  const opts = [...wrongs, correct].sort(()=>Math.random()-.5);
+  const container = document.getElementById('q-opts');
+  container.innerHTML='';
+  opts.forEach(opt=>{
+    const btn = document.createElement('button');
+    btn.className='quiz-opt';
+    btn.textContent = opt.r;
+    btn.onclick=()=>{
+      if(quizAnswered) return;
+      quizAnswered = true;
+      if(opt.r===correct.r){
+        btn.classList.add('correct');
+        correctCount++;
+        saveProgress();
+        document.getElementById('q-feedback').textContent = '✓ 正確！　' + correct.t;
+        if(!learned.has(correct.c)){learned.add(correct.c);saveProgress();const cd=document.getElementById('card-'+correct.c);if(cd)cd.classList.add('learned');}
+      } else {
+        btn.classList.add('wrong');
+        container.querySelectorAll('.quiz-opt').forEach(b=>{if(b.textContent===correct.r)b.classList.add('correct');});
+        document.getElementById('q-feedback').textContent = '✗ 正確答案是「' + correct.r + '」　' + correct.t;
+      }
+      speak(correct.c);
+    };
+    container.appendChild(btn);
+  });
+}
+
+function updateStats(){
+  const l = learned.size;
+  document.getElementById('s-learned').textContent = l;
+  document.getElementById('s-correct').textContent = correctCount;
+  const pct = Math.round(l/46*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('prog-label').textContent = '學習進度 '+l+' / 46（'+pct+'%）';
+}
+
+function resetProgress(){
+  if(!confirm('確定要重置所有學習進度嗎？')) return;
+  learned.clear();
+  correctCount = 0;
+  localStorage.removeItem('learned');
+  localStorage.removeItem('correct');
+  document.querySelectorAll('.kana-card').forEach(c=>{
+    c.classList.remove('learned','active');
+  });
+  updateStats();
+}
+
+buildGrids();
+updateStats();
+</script>
+</body>
+</html>
