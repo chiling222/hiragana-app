@@ -345,6 +345,7 @@ body{
         <div class="detail-example" id="d-eg">例：あおい（aoi）藍色</div>
       </div>
     </div>
+    <div id="voice-info" style="font-size:11px;color:var(--text3);text-align:right;margin-bottom:4px;min-height:14px"></div>
     <button class="speak-btn" onclick="speak(currentChar)">
       <span class="speak-icon">♪</span>
       朗讀發音
@@ -523,17 +524,24 @@ let _jaVoice = null;
 
 function loadVoice(){
   const voices = speechSynthesis.getVoices();
-  const preferred = ['Otoya','Kyoko','O-Ren','Hattori'];
+  const preferred = ['Otoya','Hattori','Kyoko','O-Ren','O_Ren'];
   for(const name of preferred){
-    const v = voices.find(v=>v.name.includes(name));
-    if(v){_jaVoice=v; console.log('Voice:',v.name); return;}
+    const v = voices.find(v=>v.name.toLowerCase().includes(name.toLowerCase()));
+    if(v){_jaVoice=v; showVoiceName(v.name); return;}
   }
-  _jaVoice = voices.find(v=>v.lang==='ja-JP'||v.lang==='ja_JP'||v.lang.startsWith('ja')) || null;
-  if(_jaVoice) console.log('Voice fallback:',_jaVoice.name);
+  const jaVoices = voices.filter(v=>v.lang==='ja-JP'||v.lang==='ja_JP'||v.lang.startsWith('ja'));
+  const male = jaVoices.find(v=>v.name.match(/male|man|otoya|hattori/i));
+  _jaVoice = male || jaVoices[0] || null;
+  if(_jaVoice) showVoiceName(_jaVoice.name);
+}
+
+function showVoiceName(name){
+  const el = document.getElementById('voice-info');
+  if(el) el.textContent = '聲音：' + name;
 }
 
 speechSynthesis.onvoiceschanged = loadVoice;
-loadVoice();
+setTimeout(loadVoice, 200);
 
 function speak(char){
   if(!char||!char.trim()) return;
@@ -547,7 +555,7 @@ function speak(char){
     u.pitch = 1.0;
     if(_jaVoice) u.voice = _jaVoice;
     speechSynthesis.speak(u);
-  }, 80);
+  }, 100);
 }
 
 function setTab(tab){
