@@ -519,48 +519,35 @@ function selectKana(item){
   speak(item.c);
 }
 
-const AUDIO_FILES = {
-  'あ':'2/28/Japanese_a.ogg','い':'9/91/Japanese_i.ogg','う':'e/e8/Japanese_u.ogg',
-  'え':'7/79/Japanese_e.ogg','お':'5/5a/Japanese_o.ogg',
-  'か':'f/f8/Japanese_ka.ogg','き':'c/c6/Japanese_ki.ogg','く':'e/e2/Japanese_ku.ogg',
-  'け':'d/d4/Japanese_ke.ogg','こ':'5/5a/Japanese_ko.ogg',
-  'さ':'5/5e/Japanese_sa.ogg','し':'2/2c/Japanese_si.ogg','す':'6/6d/Japanese_su.ogg',
-  'せ':'7/72/Japanese_se.ogg','そ':'a/a4/Japanese_so.ogg',
-  'た':'8/88/Japanese_ta.ogg','ち':'1/1f/Japanese_ti.ogg','つ':'a/af/Japanese_tu.ogg',
-  'て':'9/9d/Japanese_te.ogg','と':'8/8c/Japanese_to.ogg',
-  'な':'5/5e/Japanese_na.ogg','に':'d/df/Japanese_ni.ogg','ぬ':'f/fa/Japanese_nu.ogg',
-  'ね':'3/38/Japanese_ne.ogg','の':'8/8a/Japanese_no.ogg',
-  'は':'7/70/Japanese_ha.ogg','ひ':'c/c4/Japanese_hi.ogg','ふ':'d/d0/Japanese_hu.ogg',
-  'へ':'d/d3/Japanese_he.ogg','ほ':'8/80/Japanese_ho.ogg',
-  'ま':'d/d5/Japanese_ma.ogg','み':'1/17/Japanese_mi.ogg','む':'3/38/Japanese_mu.ogg',
-  'め':'2/2f/Japanese_me.ogg','も':'9/93/Japanese_mo.ogg',
-  'や':'7/7e/Japanese_ya.ogg','ゆ':'f/f8/Japanese_yu.ogg','よ':'0/04/Japanese_yo.ogg',
-  'ら':'5/5f/Japanese_ra.ogg','り':'c/cd/Japanese_ri.ogg','る':'4/42/Japanese_ru.ogg',
-  'れ':'f/f4/Japanese_re.ogg','ろ':'8/8b/Japanese_ro.ogg',
-  'わ':'8/8b/Japanese_wa.ogg','を':'5/58/Japanese_wo.ogg','ん':'1/14/Japanese_n.ogg'
-};
-const AUDIO_BASE = 'https://upload.wikimedia.org/wikipedia/commons/';
-let _currentAudio = null;
+let _jaVoice = null;
+
+function loadVoice(){
+  const voices = speechSynthesis.getVoices();
+  const preferred = ['Otoya','Kyoko','O-Ren','Hattori'];
+  for(const name of preferred){
+    const v = voices.find(v=>v.name.includes(name));
+    if(v){_jaVoice=v; console.log('Voice:',v.name); return;}
+  }
+  _jaVoice = voices.find(v=>v.lang==='ja-JP'||v.lang==='ja_JP'||v.lang.startsWith('ja')) || null;
+  if(_jaVoice) console.log('Voice fallback:',_jaVoice.name);
+}
+
+speechSynthesis.onvoiceschanged = loadVoice;
+loadVoice();
 
 function speak(char){
   if(!char||!char.trim()) return;
-  const path = AUDIO_FILES[char];
-  if(!path){
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  setTimeout(()=>{
+    if(!_jaVoice) loadVoice();
     const u = new SpeechSynthesisUtterance(char);
-    u.lang='ja-JP'; u.rate=0.7;
-    speechSynthesis.cancel();
+    u.lang = 'ja-JP';
+    u.rate = 0.6;
+    u.pitch = 1.0;
+    if(_jaVoice) u.voice = _jaVoice;
     speechSynthesis.speak(u);
-    return;
-  }
-  if(_currentAudio){_currentAudio.pause();_currentAudio=null;}
-  const a = new Audio(AUDIO_BASE + path);
-  _currentAudio = a;
-  a.play().catch(()=>{
-    const u = new SpeechSynthesisUtterance(char);
-    u.lang='ja-JP'; u.rate=0.7;
-    speechSynthesis.cancel();
-    speechSynthesis.speak(u);
-  });
+  }, 80);
 }
 
 function setTab(tab){
