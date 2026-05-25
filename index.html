@@ -346,6 +346,8 @@ body{
       </div>
     </div>
     <div id="voice-info" style="font-size:11px;color:var(--text3);text-align:right;margin-bottom:4px;min-height:14px"></div>
+    <div id="voice-list" style="font-size:10px;color:var(--text3);margin-bottom:4px;line-height:1.6;display:none"></div>
+    <button onclick="showAllVoices()" style="font-size:11px;color:var(--text3);background:none;border:none;padding:0;margin-bottom:6px;cursor:pointer;text-decoration:underline">顯示所有日語聲音</button>
     <button class="speak-btn" onclick="speak(currentChar)">
       <span class="speak-icon">♪</span>
       朗讀發音
@@ -533,6 +535,14 @@ function loadVoice(){
   const male = jaVoices.find(v=>v.name.match(/male|man|otoya|hattori/i));
   _jaVoice = male || jaVoices[0] || null;
   if(_jaVoice) showVoiceName(_jaVoice.name);
+}
+
+function showAllVoices(){
+  const voices = speechSynthesis.getVoices();
+  const jaVoices = voices.filter(v=>v.lang.startsWith('ja'));
+  const el = document.getElementById('voice-list');
+  el.style.display = 'block';
+  el.textContent = jaVoices.map(v=>v.name+' ('+v.lang+')').join(' | ') || '找不到日語聲音';
 }
 
 function showVoiceName(name){
