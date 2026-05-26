@@ -54,12 +54,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .speak-btn.kata{background:var(--kata-light);border-color:var(--kata);color:var(--kata-text);}
 .speak-btn:active{opacity:.8;}
 
-/* 手寫區 */
-.write-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px;}
-.write-title{font-size:12px;color:var(--text3);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
 .clear-btn{font-size:11px;color:var(--text3);background:none;border:1px solid var(--border);border-radius:6px;padding:3px 8px;cursor:pointer;}
-canvas{display:block;width:100%;height:180px;background:#FAFAF8;border:1px solid var(--border);border-radius:8px;touch-action:none;cursor:crosshair;}
-.write-hint{font-size:11px;color:var(--text3);text-align:center;margin-top:6px;}
 
 /* 格線 */
 .row-label{font-size:11px;color:var(--text3);font-weight:500;margin:12px 0 5px;padding-left:2px;}
@@ -134,15 +129,6 @@ canvas{display:block;width:100%;height:180px;background:#FAFAF8;border:1px solid
     <button class="speak-btn" id="speak-btn" onclick="speak(currentChar)">♪ 朗讀發音</button>
   </div>
 
-  <div class="write-section">
-    <div class="write-title">
-      <span>✏️ 手寫練習</span>
-      <button class="clear-btn" onclick="clearCanvas()">清除</button>
-    </div>
-    <canvas id="write-canvas"></canvas>
-    <div class="write-hint" id="write-hint">用手指或滑鼠寫寫看「あ」</div>
-  </div>
-
   <div id="kana-rows"></div>
 </div>
 
@@ -176,6 +162,28 @@ canvas{display:block;width:100%;height:180px;background:#FAFAF8;border:1px solid
   <div class="progress-label" id="prog-kata-label">0 / 46</div>
   <button class="action-btn danger" onclick="resetProgress()">重置所有進度</button>
 </div>
+<!-- 手寫抽屜 -->
+<div id="drawer-overlay" onclick="closeDrawer()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.2);z-index:200;"></div>
+<div id="write-drawer" style="position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);width:100%;max-width:480px;background:var(--surface);border-radius:16px 16px 0 0;border-top:1px solid var(--border);padding:0 16px 0;z-index:201;transition:transform .3s ease;box-shadow:0 -4px 20px rgba(0,0,0,0.1);">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0 10px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:13px;color:var(--text2);">✏️ 手寫練習</span>
+      <span id="drawer-char" style="font-family:'Noto Serif JP',serif;font-size:22px;color:var(--text);">あ</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button class="clear-btn" onclick="clearCanvas()">清除</button>
+      <button onclick="closeDrawer()" style="font-size:13px;color:var(--text3);background:none;border:none;padding:4px 8px;cursor:pointer;">✕</button>
+    </div>
+  </div>
+  <canvas id="write-canvas" style="display:block;width:100%;height:200px;background:#FAFAF8;border:1px solid var(--border);border-radius:8px;touch-action:none;cursor:crosshair;margin-bottom:12px;"></canvas>
+  <div id="write-hint" style="font-size:11px;color:var(--text3);text-align:center;padding-bottom:16px;"></div>
+</div>
+
+<!-- 練習按鈕（固定底部） -->
+<div id="practice-bar" style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--surface);border-top:1px solid var(--border);padding:10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom));z-index:199;display:none;">
+  <button onclick="openDrawer()" style="width:100%;padding:11px;background:var(--accent-light);border:1px solid var(--accent);border-radius:var(--radius-sm);color:var(--accent-text);font-size:14px;font-family:'Noto Sans TC',sans-serif;cursor:pointer;">✏️ 練習寫「<span id="bar-char">あ</span>」</button>
+</div>
+
 <div class="safe-area"></div>
 
 <script>
@@ -428,6 +436,24 @@ function selectKana(item){
   clearCanvas();
   renderWords(item.w||[]);
   speak(item.c);
+  // 顯示底部練習按鈕
+  document.getElementById('practice-bar').style.display = 'block';
+  document.getElementById('bar-char').textContent = item.c;
+  document.getElementById('drawer-char').textContent = item.c;
+  document.getElementById('write-hint').textContent = '對照左上角「'+item.c+'」，用手指描寫';
+}
+
+function openDrawer(){
+  document.getElementById('write-drawer').style.transform = 'translateX(-50%) translateY(0)';
+  document.getElementById('drawer-overlay').style.display = 'block';
+  document.getElementById('practice-bar').style.display = 'none';
+  setTimeout(()=>{ if(!canvas) initCanvas(); else { clearCanvas(); } }, 50);
+}
+
+function closeDrawer(){
+  document.getElementById('write-drawer').style.transform = 'translateX(-50%) translateY(100%)';
+  document.getElementById('drawer-overlay').style.display = 'none';
+  document.getElementById('practice-bar').style.display = 'block';
 }
 
 function renderWords(words){
@@ -466,9 +492,11 @@ let canvas, ctx, isDrawing=false, lastX=0, lastY=0;
 function initCanvas(){
   canvas = document.getElementById('write-canvas');
   const dpr = window.devicePixelRatio||1;
+  // 強制取得實際寬度
+  canvas.style.width = '100%';
   const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
+  canvas.width = (rect.width||320) * dpr;
+  canvas.height = 200 * dpr;
   ctx = canvas.getContext('2d');
   ctx.scale(dpr, dpr);
   ctx.strokeStyle = '#1A1A18';
@@ -608,7 +636,6 @@ function resetProgress(){
 buildGrids();
 updateStats();
 setTimeout(()=>{
-  initCanvas();
   const first = HIRA_ROWS[0].items[0];
   selectKana(first);
 }, 100);
